@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.student.StudentMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+      id,stu_no AS stuNo, name, sex, birthday, clazz_id AS clazzId
+    </sql>
+    <select id="searchStudentVoPage" resultType="com.martian.vo.student.StudentVo">
+        SELECT
+           DISTINCT s.*,u.user_name,d.name AS departName,c.name AS clazzName,d.id AS departId,c.id AS clazzId
+        FROM
+          t_student s LEFT JOIN t_user u ON s.id  = u.obj_id AND u.role_id='3'
+          LEFT JOIN t_depart d ON s.depart_id = d.id
+          LEFT JOIN t_clazz c ON s.clazz_id = c.id
+          LEFT JOIN t_course course ON c.id = course.clazz_id
+        WHERE
+            s.is_valid = 'Y'
+            <if test="studentSearchDto.studentName!=null and studentSearchDto.studentName!=''">
+                AND s.name LIKE CONCAT('%',#{studentSearchDto.studentName},'%')
+            </if>
+            <if test="studentSearchDto.stuNo!=null and studentSearchDto.stuNo!=''">
+                AND s.stu_no LIKE CONCAT('%',#{studentSearchDto.stuNo},'%')
+            </if>
+            <if test="studentSearchDto.clazzId!=null and studentSearchDto.clazzId!=''">
+                AND s.clazz_id = #{studentSearchDto.clazzId}
+            </if>
+            <if test="studentSearchDto.departId!=null and studentSearchDto.departId!=''">
+                AND s.depart_id = #{studentSearchDto.departId}
+            </if>
+            <if test="studentSearchDto.teacherId!=null and studentSearchDto.teacherId!=''">
+                AND course.teacher_id = #{studentSearchDto.teacherId}
+            </if>
+        ORDER BY s.create_time DESC
+    </select>
+    <select id="getStudentVo" resultType="com.martian.vo.student.StudentVo">
+        SELECT
+           s.*,u.user_name,d.name AS departName,c.name AS clazzName,d.id AS departId,c.id AS clazzId
+        FROM
+          t_student s LEFT JOIN t_user u ON s.id  = u.obj_id AND u.role_id='3'
+          LEFT JOIN t_depart d ON s.depart_id = d.id
+          LEFT JOIN t_clazz c ON s.clazz_id = c.id
+        WHERE
+            s.is_valid = 'Y'
+          AND s.id = #{studentId}
+    </select>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.resource.ResourceMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        pid, name, url, icon, resource_type AS resourceType, sort
+    </sql>
+    <select id="getResourceTree" resultType="com.martian.vo.tree.ResourceTreeVo">
+        SELECT id,pid AS pId,name FROM t_resource WHERE is_valid ='Y'
+    </select>
+    <select id="getPermissionList" resultType="com.martian.entity.resource.Resource">
+        SELECT
+            r.*
+        FROM
+            t_user u,t_role_resource rr,t_resource r
+        WHERE
+            r.is_valid ='Y'
+            AND u.role_id = rr.role_id
+            AND rr.resource_id = r.id
+            AND u.id = #{userId}
+            <if test="resourceType!=null">
+              AND   r.resource_type = #{resourceType}
+            </if>
+        ORDER BY r.pid,r.sort
+    </select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <mapping path="/*" decorator="/WEB-INF/views/decorator.jsp"/>
+
+    <!-- 排除 -->
+    <mapping path="/login" exclue="true"></mapping>
+    <mapping path="/assets/**" exclue="true"></mapping>
+    <mapping path="/WEB-INF/views/decorator.jsp" exclue="true"></mapping>
+    <mapping path="/upload" exclue="true"></mapping>
+
+    <!-- 增加自定义标签，目前只提供了一个 myJs -->
+    <content-processor>
+        <tag-rule-bundle class="com.martian.common.sitemesh.ExtHtmlTagRuleBundle" />
+    </content-processor>
+</sitemesh>

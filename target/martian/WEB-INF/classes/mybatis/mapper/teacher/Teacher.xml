@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.teacher.TeacherMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        is_valid AS isValid,
+        create_by AS createBy,
+        create_time AS createTime,
+        update_by AS updateBy,
+        update_time AS updateTime,
+        name, sex, birthday
+    </sql>
+    <select id="searchTeacherVoPage" resultType="com.martian.vo.teacher.TeacherVo">
+        SELECT
+          t.*,u.user_name
+        FROM
+          t_teacher t LEFT JOIN t_user u ON t.id  = u.obj_id AND u.role_id='2'
+        WHERE
+          t.is_valid = 'Y'
+        <if test="teacherSearchDto.teacherName!=null and teacherSearchDto.teacherName!=''">
+            AND t.name LIKE CONCAT('%',#{teacherSearchDto.teacherName},'%')
+        </if>
+        ORDER BY t.create_time DESC
+    </select>
+    <select id="getTeacherVo" resultType="com.martian.vo.teacher.TeacherVo">
+        SELECT
+          t.*,u.user_name
+        FROM
+          t_teacher t LEFT JOIN t_user u ON t.id  = u.obj_id AND u.role_id='2'
+        WHERE
+          t.is_valid = 'Y'
+          AND t.id = #{teacherId}
+    </select>
+    <select id="getCourse" resultType="com.martian.entity.course.Course">
+        SELECT
+           c.*
+        FROM
+           t_teacher t LEFT JOIN  t_course c ON t.id = c.teacher_id
+        WHERE
+        t.is_valid = 'Y'
+        AND c.clazz_id =  #{clazzId}
+        AND t.id =  #{teacherId}
+        ORDER BY c.create_time DESC
+    </select>
+    <select id="getStudentByCourseId" resultType="com.martian.entity.student.Student">
+        SELECT
+            s.*
+        FROM
+            t_student s,
+            t_clazz clazz,
+            t_course c
+        WHERE
+            s.clazz_id = clazz.id
+        AND clazz.id = c.clazz_id
+        AND c.id = #{courseId}
+        AND s.id NOT IN (
+            SELECT
+                score.student_id
+            FROM
+                t_score score
+            WHERE
+            score.course_id = #{courseId}
+        )
+    </select>
+    <select id="scoreTjSearch" resultType="com.martian.vo.teacher.ScoreTjVo">
+        SELECT
+            c.`name` AS clazzName,
+            course.`name` AS courseName,
+            s.clazz_id,
+            s.course_id,
+            AVG(s.score) AS avgScore
+        FROM
+            t_score s LEFT JOIN t_clazz c ON s.clazz_id = c.id
+          LEFT JOIN t_course course ON s.course_id = course.id
+        WHERE
+            s.is_valid = 'Y'
+        AND  course.teacher_id = #{scoreTjSearchDto.teacherId}
+        <if test="scoreTjSearchDto.clazzId!=null and scoreTjSearchDto.clazzId!=''">
+            AND s.clazz_id =  #{scoreTjSearchDto.clazzId}
+        </if>
+        <if test="scoreTjSearchDto.courseId!=null and scoreTjSearchDto.courseId!=''">
+            AND s.course_id =  #{scoreTjSearchDto.courseId}
+        </if>
+        GROUP BY s.course_id
+    </select>
+</mapper>

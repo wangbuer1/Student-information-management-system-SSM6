@@ -1,0 +1,268 @@
+/**表格*/
+table tr th {
+    text-align: center !important;
+    color: #666;
+    font-weight: bold !important;
+}
+
+.layui-table td {
+    padding: 8px 8px !important;
+}
+
+/*table tr td:first-child {
+    text-align: center;
+}
+
+table tr td:last-child {
+    text-align: right;
+}*/
+
+/**导航条*/
+.breadcrumb {
+    background-color: #FFF;
+    width: 100%;
+    padding: 10px 15px;
+    /* border-bottom: solid 2px #eee;*/
+    border-bottom: 1px solid #e5e5e5;
+}
+.breadcrumb .action {
+    display: inline-block;
+    width: 85%;
+    height:38px;
+    line-height: 38px;
+}
+
+/**面包屑*/
+.layui-breadcrumb {
+    visibility: visible !important;
+}
+
+/**主体内容*/
+.content {
+    padding: 15px;
+    padding-top: 0px;
+}
+
+/**搜索*/
+.search {
+    margin: 9px 0px;
+}
+
+.search .layui-form-label {
+    color: #666;
+    padding: 9px 10px;
+    width: auto;
+}
+
+.search .layui-elem-quote {
+    border-left: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.left {
+    text-align: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
+}
+
+/**弹出框*/
+.popBox {
+    padding: 20px 35px;
+}
+.popBox2 {
+    padding: 20px 35px;
+}
+
+.width100 {
+    width: 100px !important;
+}
+.width120 {
+    width: 120px !important;
+}
+.width150 {
+    width: 150px !important;
+}
+.width180 {
+    width: 180px !important;
+}
+.width200 {
+    width: 200px !important;
+}
+.width250 {
+    width: 250px !important;
+}
+.width300 {
+    width: 300px !important;
+}
+
+
+.margin50 {
+    margin: 40px;
+}
+
+/**错误提示*/
+label.error {
+    /*  display: inline-block;
+      width: auto;
+      height: auto;
+      min-height: 32px;
+      padding: 6px 0px;
+      transition: none 0s ease 0s;
+      margin-left: 0px;
+      float: left;*/
+    font-size: 12px;
+    color: #E84C3D;
+}
+
+.tip {
+    color: #E84C3D;
+    margin-right: 2px;
+}
+
+/**icon*/
+.icon-list {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+.icon li {
+    float: left;
+    width: 130px;
+    padding: 10px;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: center;
+    background-color: #f9f9f9;
+    border: 1px solid #fff;
+    cursor: pointer;
+}
+
+.icon .fa {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.icon .label {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/**角色分配*/
+#allocateRole .layui-form-checkbox span {
+    width: 100px;
+}
+
+/*body .layui-tree-skin-shihuang .layui-tree-branch{color: #EDCA50;}   */
+/**myTree*/
+.myTree {
+    display: none;
+    width: 100%;
+    z-index: 9999;
+    position: absolute;
+    background-color: #fff;
+    height: 210px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow: auto;
+}
+
+/**表单*/
+.content .myForm{
+    padding: 10px;
+}
+.content .myForm .layui-form-label{
+    width: 200px;
+    margin-left: 200px;
+}
+
+.top{
+    width:100%;margin-bottom: 30px;
+}
+.top div{
+    height: 130px;line-height: 130px;font-size: 25px;
+}
+
+/**登录相关*/
+.login .title{
+    font-size: 30px;
+    font-weight: bold;
+    margin-top:80px;
+    margin-bottom:40px;
+    color: #2E2D3C;
+}
+.login .login-box{
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+.login form{
+    border: 0px solid #F0F0F0;
+    padding: 50px;
+    border-radius: 10px;
+    color: #2E2D3C;
+}
+.login form label{
+    font-size: 14px;
+    font-weight: bold;
+}
+.login .loginBtn{
+    width:40%;font-weight: bold;margin-top: 15px;
+}
+.login .registerBtn{
+    width:30%;font-weight: bold;margin-top: 15px;
+}
+#error{
+    color:#FF5722;font-size: 16px;font-weight: 900
+}
+/**提示框*/
+.layui-layer-dialog .layui-layer-content{
+    color:#2E2D3C !important;
+    border-left-color:#009688 ;
+}
+
+/*
+.layui-this a,.layui-this a:hover{
+    background-color: #2E2D3C !important;
+}*/
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover {
+    background-color:#e1eafb !important;
+    color:black!important;
+}
+.layui-nav-tree .layui-nav-bar {
+    width: 5px;
+    height: 0;
+    background-color:#108eea !important;
+}
+.layui-nav-tree .layui-nav-item a:hover{
+    background-color: #e1eafb!important;
+    color: #47444a !important;
+}
+.layui-nav-tree .layui-nav-itemed{
+    color: #0C0C0C !important;
+}
+
+.layui-nav .layui-nav-mored, .layui-nav-itemed .layui-nav-more {
+    top: 22px;
+    border-style: dashed dashed solid;
+    border-color: transparent transparent transparent !important;
+}
+.layui-nav .layui-nav-more {
+    border-top-color: transparent !important;
+}

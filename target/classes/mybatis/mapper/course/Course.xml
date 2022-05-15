@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.course.CourseMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        is_valid AS isValid,
+        create_by AS createBy,
+        create_time AS createTime,
+        update_by AS updateBy,
+        update_time AS updateTime,
+        name, depart_id AS departId, clazz_id AS clazzId, teacher_id AS teacherId, course_desc AS courseDesc, year, term
+    </sql>
+    <select id="searchCourseVoPage" resultType="com.martian.vo.course.CourseVo">
+        SELECT
+          c.*,t.name AS teacherName,d.name AS departName,clazz.name AS clazzName
+        FROM
+          t_course c LEFT JOIN t_teacher t ON c.teacher_id  = t.id
+          LEFT JOIN t_depart d ON c.depart_id = d.id
+          LEFT JOIN t_clazz clazz ON c.clazz_id = clazz.id
+        WHERE
+          c.is_valid = 'Y'
+        <if test="courseSearchDto.courseName!=null and courseSearchDto.courseName!=''">
+            AND c.name LIKE CONCAT('%',#{courseSearchDto.courseName},'%')
+        </if>
+        <if test="courseSearchDto.year!=null and courseSearchDto.year!=''">
+            AND c.year = #{courseSearchDto.year}
+        </if>
+        <if test="courseSearchDto.term!=null">
+            AND c.term =  #{courseSearchDto.term.code}
+        </if>
+        <if test="courseSearchDto.departId!=null and courseSearchDto.departId!=''">
+            AND c.depart_id =  #{courseSearchDto.departId}
+        </if>
+        <if test="courseSearchDto.clazzId!=null and courseSearchDto.clazzId!=''">
+            AND c.clazz_id =  #{courseSearchDto.clazzId}
+        </if>
+        <if test="courseSearchDto.teacherId!=null and courseSearchDto.teacherId!=''">
+            AND c.teacher_id =  #{courseSearchDto.teacherId}
+        </if>
+        ORDER BY c.create_time DESC
+    </select>
+    <select id="getCourseVo" resultType="com.martian.vo.course.CourseVo">
+        SELECT
+          c.*,t.name AS teacherName,d.name AS departName,clazz.name AS clazzName
+        FROM
+          t_course c LEFT JOIN t_teacher t ON c.teacher_id  = t.id
+          LEFT JOIN t_depart d ON c.depart_id = d.id
+          LEFT JOIN t_clazz clazz ON c.clazz_id = clazz.id
+        WHERE
+          c.is_valid = 'Y' AND c.id = #{courseId}
+    </select>
+</mapper>

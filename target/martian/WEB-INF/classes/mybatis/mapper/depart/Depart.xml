@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.depart.DepartMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+id,
+is_valid AS isValid,
+create_by AS createBy,
+create_time AS createTime,
+update_by AS updateBy,
+update_time AS updateTime,
+        name, depart_desc AS departDesc
+    </sql>
+
+</mapper>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.martian.dao.score.ScoreMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id,
+        is_valid AS isValid,
+        create_by AS createBy,
+        create_time AS createTime,
+        update_by AS updateBy,
+        update_time AS updateTime,
+        depart_id AS departId, clazz_id AS clazzId, student_id AS studentId, course_id AS courseId, year, score, term
+    </sql>
+    <select id="searchScoreVoPage" resultType="com.martian.vo.score.ScoreVo">
+        SELECT
+        DISTINCT c.*,t.name AS teacherName,d.name AS departName,clazz.name AS clazzName,s.score,stu.name AS studentName,s.id AS scoreId
+        FROM
+        t_score s LEFT JOIN t_course c ON s.course_id = c.id
+        LEFT JOIN t_student stu ON s.student_id = stu.id
+        LEFT JOIN t_teacher t ON c.teacher_id  = t.id
+        LEFT JOIN t_depart d ON c.depart_id = d.id
+        LEFT JOIN t_clazz clazz ON c.clazz_id = clazz.id
+        WHERE
+        s.is_valid = 'Y'
+        <if test="scoreSearchDto.studentName!=null and scoreSearchDto.studentName!=''">
+            AND stu.name LIKE CONCAT('%',#{scoreSearchDto.studentName},'%')
+        </if>
+        <if test="scoreSearchDto.courseId!=null and scoreSearchDto.courseId!=''">
+            AND c.id = #{scoreSearchDto.courseId}
+        </if>
+        <if test="scoreSearchDto.year!=null and scoreSearchDto.year!=''">
+            AND c.year = #{scoreSearchDto.year}
+        </if>
+        <if test="scoreSearchDto.term!=null">
+            AND c.term =  #{scoreSearchDto.term.code}
+        </if>
+        <if test="scoreSearchDto.departId!=null and scoreSearchDto.departId!=''">
+            AND c.depart_id =  #{scoreSearchDto.departId}
+        </if>
+        <if test="scoreSearchDto.clazzId!=null and scoreSearchDto.clazzId!=''">
+            AND c.clazz_id =  #{scoreSearchDto.clazzId}
+        </if>
+        <if test="scoreSearchDto.teacherId!=null and scoreSearchDto.teacherId!=''">
+            AND c.teacher_id =  #{scoreSearchDto.teacherId}
+        </if>
+        <if test="scoreSearchDto.studentId!=null and scoreSearchDto.studentId!=''">
+            AND stu.id =  #{scoreSearchDto.studentId}
+        </if>
+        ORDER BY c.create_time DESC
+    </select>
+</mapper>
